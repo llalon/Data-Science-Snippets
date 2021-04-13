@@ -20,7 +20,9 @@ def doc_to_csv(file, out=pathlib.Path("./")):
         for i, row in enumerate(table.rows):
             for j, cell in enumerate(row.cells):
                 df[i][j] = cell.text
-            pd.DataFrame(df).to_csv("%s/Table#%s.csv" % (str(out), str(index)))
+            pd.DataFrame(df).to_csv(
+                "%s/Table#%s.csv" % (str(out), str(index)), index=False
+            )
 
 
 if __name__ == "__main__":
