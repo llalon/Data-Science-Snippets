@@ -10,5 +10,5 @@ for index, table in enumerate(document.tables):
     for i, row in enumerate(table.rows):
         for j, cell in enumerate(row.cells):
             df[i][j] = cell.text
-        #Convert to a Pandas DataFrame -> drop the first (index) row -> write to csv
-        pd.DataFrame(df).iloc[1:].to_csv('OUTPUT DIRECTORY/Table#' + str(index) + '.csv', index=False)
+        #Convert to a Pandas DataFrame then write to CSV, dropping index row and column
+        pd.DataFrame(df).to_csv('OUTPUT DIRECTORY/Table#' + str(index) + '.csv', header=False, index=False)
