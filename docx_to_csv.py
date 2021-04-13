@@ -12,7 +12,7 @@ import argparse
 import pathlib
 
 
-def doc_to_csv(file, out=pathlib.Path("./")):
+def doc_to_csv(file, out=pathlib.Path("./"), index=False):
     document = Document(file)
     tables = []
     for index, table in enumerate(document.tables):
@@ -21,7 +21,7 @@ def doc_to_csv(file, out=pathlib.Path("./")):
             for j, cell in enumerate(row.cells):
                 df[i][j] = cell.text
             pd.DataFrame(df).to_csv(
-                "%s/Table#%s.csv" % (str(out), str(index)), index=False
+                "%s/Table#%s.csv" % (str(out), str(index)), index=index
             )
 
 
@@ -38,9 +38,18 @@ if __name__ == "__main__":
         type=pathlib.Path,
         help="Sets the output folder. Defaults to the current working directory.",
     )
+    argparser.add_argument(
+        "-i",
+        "--index",
+        action="store_true",
+        default=False,
+        help="Adds index column to csv files.",
+    )
+
     args = argparser.parse_args(sys.argv[1:])
 
     FILE = args.filename
     DIR = args.output
+    INDEX = args.index
 
-    doc_to_csv(FILE, DIR)
+    doc_to_csv(FILE, DIR, INDEX)
